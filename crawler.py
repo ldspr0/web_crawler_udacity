@@ -31,5 +31,6 @@ def crawl_web (seed):
     while toCrawl:
         page = toCrawl.pop();
         if page not in crawled:
-
+                union(toCrawl, get_all_links(get_page(page)));
+                crawled.append(page);
     return crawled;
