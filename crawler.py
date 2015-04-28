@@ -9,6 +9,13 @@ def get_all_links(page):
             break;
     return links;
 
+
+#depth first page;
 def crawl_web (seed):
     toCrawl = [seed];
     crawled = [];
+    while toCrawl:
+        page = toCrawl.pop();
+        if page not in crawled:
+            
+    return crawled;
