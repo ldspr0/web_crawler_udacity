@@ -7,6 +7,11 @@ def get_next_target(page):
     url = page[start_quote + 1:end_quote]
     return url, end_quote
 
+def union(p,q):
+    for e in q:
+        if e not in p:
+            p.append(e)
+
 def get_all_links(page):
     links = [];
     while True:
