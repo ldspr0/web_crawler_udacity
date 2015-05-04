@@ -38,13 +38,18 @@ def get_all_links(page):
     return links
 
 
-#depth first page;
-def crawl_web (seed):
+#depth level crawling
+def crawl_web (seed, max_depth):
     toCrawl = [seed]
     crawled = []
-    while toCrawl:
+    next_depth = []
+    depth = 0
+    while toCrawl and depth <= max_depth:
         page = toCrawl.pop()
         if page not in crawled:
-                union(toCrawl, get_all_links(get_page(page)))
+                union(next_depth, get_all_links(get_page(page)))
                 crawled.append(page)
+        if not toCrawl:
+            toCrawl, next_depth = next_depth, []
+            depth += 1
     return crawled
