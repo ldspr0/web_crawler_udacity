@@ -53,3 +53,28 @@ def crawl_web (seed, max_depth):
             toCrawl, next_depth = next_depth, []
             depth += 1
     return crawled
+    
+index = []
+
+def add_to_index(index,keyword,url):
+    addnew = -1
+    for each_list_index in index:
+        if keyword == each_list_index[0]:
+            addnew = 0
+            break
+        else:
+            addnew = 1
+    if addnew == 1:
+        list_of_urls = [url]
+        item = [keyword, list_of_urls]
+        index.append(item)
+    if addnew == 0:
+        place = index[0].index(keyword)
+        index[place][1].append(url)
+       
+    if index == []:
+        list_of_urls = [url]
+        item = [keyword, list_of_urls]
+        index.append(item)
+    return index
+    
