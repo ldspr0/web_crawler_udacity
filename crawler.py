@@ -61,3 +61,8 @@ def add_to_index (index, keyword, url):
 			return
 	index.append([keyword,[url]])
     
+def lookup(index,keyword):
+    for each in index:
+        if each[0] == keyword:
+            return each[1]
+    return []
