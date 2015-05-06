@@ -55,7 +55,7 @@ def crawl_web (seed, max_depth):
         if not toCrawl:
             toCrawl, next_depth = next_depth, []
             depth += 1
-    return crawled
+    return index
     
 def add_to_index (index, keyword, url):
 	for entry in index:
