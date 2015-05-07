@@ -1,3 +1,11 @@
+def record_user_click(index, keyword,url):
+	urls = lookup(index, keyword)
+	if urls:
+		for entry in urls:
+			if entry[0] == url:
+				entry[1] = entry[1] + 1
+
+
 def get_page(url):
     # This is a simulated get_page procedure so that you can test your
     # code on two pages "http://xkcd.com/353" and "http://xkcd.com/554".
@@ -60,10 +68,12 @@ def crawl_web (seed, max_depth):
 def add_to_index (index, keyword, url):
 	for entry in index:
 		if entry[0] == keyword:
-			if url not in entry[1]:
-				entry[1].append(url)
+			for element in entry[1]:
+				if element[0]  == url:
+					return
+			entry[1].append([url,0])
 			return
-	index.append([keyword,[url]])
+	index.append([keyword,[[url,0]]])
     
 def lookup(index,keyword):
     for each in index:
