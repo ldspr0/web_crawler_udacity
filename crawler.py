@@ -50,7 +50,7 @@ def get_all_links(page):
 def crawl_web (seed, max_depth):
     toCrawl = [seed]
     crawled = []
-    index = []
+    index = {}
     next_depth = []
     depth = 0
     while toCrawl and depth <= max_depth:
@@ -66,20 +66,17 @@ def crawl_web (seed, max_depth):
     return index
     
 def add_to_index (index, keyword, url):
-	for entry in index:
-		if entry[0] == keyword:
-			for element in entry[1]:
-				if element[0]  == url:
-					return
-			entry[1].append([url,0])
-			return
-	index.append([keyword,[[url,0]]])
+	if keyword in index:
+		index[keyword].append([url,0])
+	else:
+		index[keyword] = [url,0]
     
 def lookup(index,keyword):
-    for each in index:
-        if each[0] == keyword:
-            return each[1]
-    return []
+	if keyword in index:
+		return index[keyword]
+	else:
+		return None
+
 
 def add_page_to_index(index,url,content):
     content_list = content.split()
