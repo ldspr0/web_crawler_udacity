@@ -1,9 +1,9 @@
-def record_user_click(index, keyword,url):
-	urls = lookup(index, keyword)
-	if urls:
-		for entry in urls:
-			if entry[0] == url:
-				entry[1] = entry[1] + 1
+def record_user_click(index, keyword, url):
+    urls = lookup(index, keyword)
+    if urls:
+        for entry in urls:
+            if entry[0] == url:
+                entry[1] = entry[1] + 1
 
 
 def get_page(url):
@@ -20,6 +20,7 @@ def get_page(url):
         return ""
     return ""
 
+
 def get_next_target(page):
     start_link = page.find('<a href=')
     if start_link == -1:
@@ -29,57 +30,60 @@ def get_next_target(page):
     url = page[start_quote + 1:end_quote]
     return url, end_quote
 
-def union(p,q):
+
+def union(p, q):
     for e in q:
         if e not in p:
             p.append(e)
 
+
 def get_all_links(page):
     links = []
     while True:
-        url, endpos = get_next_target(page)
+        url, end_pos = get_next_target(page)
         if url:
             links.append(url)
-            page = page[endpos:]
+            page = page[end_pos:]
         else:
             break
     return links
 
 
-#depth level crawling
-def crawl_web (seed, max_depth):
-    toCrawl = [seed]
+# depth level crawling
+def crawl_web(seed, max_depth):
+    to_crawl = [seed]
     crawled = []
     index = {}
     next_depth = []
     depth = 0
-    while toCrawl and depth <= max_depth:
-        page = toCrawl.pop()
+    while to_crawl and depth <= max_depth:
+        page = to_crawl.pop()
         if page not in crawled:
-        	content = get_page(page)
-        	add_page_to_index(index, page, content)
-                union(next_depth, get_all_links(content))
-                crawled.append(page)
-        if not toCrawl:
-            toCrawl, next_depth = next_depth, []
+            content = get_page(page)
+            add_page_to_index(index, page, content)
+            union(next_depth, get_all_links(content))
+            crawled.append(page)
+        if not to_crawl:
+            to_crawl, next_depth = next_depth, []
             depth += 1
-    return index
-    
-def add_to_index (index, keyword, url):
-	if keyword in index:
-		index[keyword].append([url,0])
-	else:
-		index[keyword] = [url,0]
-    
-def lookup(index,keyword):
-	if keyword in index:
-		return index[keyword]
-	else:
-		return None
+        return index
 
 
-def add_page_to_index(index,url,content):
+def add_to_index(index, keyword, url):
+    if keyword in index:
+        index[keyword].append([url, 0])
+    else:
+        index[keyword] = [url, 0]
+
+
+def lookup(index, keyword):
+    if keyword in index:
+        return index[keyword]
+    else:
+        return None
+
+
+def add_page_to_index(index, url, content):
     content_list = content.split()
     for entry in content_list:
         add_to_index(index, entry, url)
-
