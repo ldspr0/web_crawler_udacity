@@ -1,9 +1,15 @@
+from string import printable
+from pip._vendor.six import print_
+
+
 def record_user_click(index, keyword, url):
     urls = lookup(index, keyword)
     if urls:
         for entry in urls:
+            print_(urls)
+            print_(url)
             if entry[0] == url:
-                entry[1] = entry[1] + 1
+                entry[1] += 1
 
 
 def get_page(url):
@@ -61,12 +67,13 @@ def crawl_web(seed, max_depth):
         if page not in crawled:
             content = get_page(page)
             add_page_to_index(index, page, content)
-            union(next_depth, get_all_links(content))
-            crawled.append(page)
+            union(next_depth, get_all_links(content))  # something bugged here need to check
+            crawled.append(page)                        # @TODO: Run code and check.
         if not to_crawl:
             to_crawl, next_depth = next_depth, []
             depth += 1
-        return index
+    print_("index: " + str(index))
+    return index
 
 
 def add_to_index(index, keyword, url):
@@ -87,3 +94,12 @@ def add_page_to_index(index, url, content):
     content_list = content.split()
     for entry in content_list:
         add_to_index(index, entry, url)
+
+
+
+index = crawl_web('http://xkcd.com/353', 1)
+print_("lookup")
+print_(lookup(index, 'comic'))
+record_user_click(index, 'comic', 'http://xkcd.com/353')
+print_("new index")
+print_(index)
