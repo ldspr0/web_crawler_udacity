@@ -1,4 +1,4 @@
-from string import printabl
+from string import printable
 from pip._vendor.six import print_
 
 
